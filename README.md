@@ -2,6 +2,8 @@
 
 [Cert Warden](https://www.certwarden.com/) (offizielles Image) für Unraid: holt und erneuert Let's-Encrypt-Zertifikate automatisch, mit Weboberfläche und API – und legt sie auf eine Unraid-Freigabe, damit andere Container sie nutzen können.
 
+Teil der Sammlung [unraid-images](https://github.com/SysriX/unraid-images) – Übersicht aller Pakete.
+
 `ghcr.io/sysrix/certwarden-unraid:latest`
 
 ## Was es kann
@@ -9,7 +11,7 @@
 - **Weboberfläche** für Konten, Schlüssel und Zertifikate; erneuert automatisch vor Ablauf
 - **DNS-01** für STRATO (über den Kundenlogin, ohne API) und Hetzner (eingebaut), **HTTP-01** über Port 4060
 - **Ablage auf eine Unraid-Freigabe** nach jeder Ausstellung und Erneuerung
-- **API** zum Abholen der Zertifikate, z. B. durch [haproxy-unraid](../haproxy/README.md)
+- **API** zum Abholen der Zertifikate, z. B. durch [haproxy-unraid](https://github.com/SysriX/haproxy_unraid)
 - öffentliche DNS-Server voreingestellt, damit DNS-01 auch bei internem Split-DNS funktioniert
 
 Läuft **allein**; HAProxy ist nicht nötig.
@@ -73,3 +75,9 @@ Programme, die Zertifikate nicht selbst neu einlesen, nach der Erneuerung neu st
 ## Updates
 
 Neu gebaut, sobald das offizielle Cert-Warden-Image aktualisiert wird; Unraid zeigt dann „Update verfügbar“.
+
+## Hilfe
+
+Fragen und Fehler bitte als [GitHub-Issue](https://github.com/SysriX/certwarden_unraid/issues).
+
+Lizenz: MIT – siehe [LICENSE](LICENSE). Cert Warden steht unter eigener Lizenz.

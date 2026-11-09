@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>certwarden-unraid</Name>
+  <Repository>ghcr.io/sysrix/certwarden-unraid:latest</Repository>
+  <Registry>https://github.com/SysriX/certwarden_unraid/pkgs/container/certwarden-unraid</Registry>
+  <Network>br0</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/SysriX/certwarden_unraid/issues</Support>
+  <Project>https://github.com/SysriX/certwarden_unraid</Project>
+  <ReadMe>https://github.com/SysriX/certwarden_unraid/blob/main/README.md</ReadMe>
+  <Overview>Cert Warden (offizielles Image) – holt und erneuert Let's-Encrypt-Zertifikate mit Weboberfläche und API. Zusätzlich: python3 und ein DNS-01-Skript für STRATO (ohne API, über den Kundenlogin), Hetzner über den eingebauten Anbieter, HTTP-01 über Port 4060 hinter HAProxy. Neue und erneuerte Zertifikate legt /opt/ablage/cw-ablegen.sh (je Zertifikat unter Post Processing eintragen) automatisch auf eine Unraid-Freigabe ab (cert.pem, privkey.pem, combined.pem), wo andere Container sie lesen können. Öffentliche DNS-Server sind voreingestellt, damit DNS-01 auch bei internem Split-DNS funktioniert.&#xD;
+&#xD;
+Netzwerk: eigenes Unraid-Netz (br0 bzw. das VLAN der Firewall) mit fester IP. Erste Anmeldung admin / password, danach sofort ändern.</Overview>
+  <Category>Network:Management Security: Tools:</Category>
+  <ExtraSearchTerms>cert warden certwarden acme lets encrypt letsencrypt certificate ssl strato hetzner dns-01</ExtraSearchTerms>
+  <WebUI>https://[IP]:[PORT:4055]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/SysriX/certwarden_unraid/main/templates/certwarden-unraid.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/SysriX/certwarden_unraid/main/icon.svg</Icon>
+  <ExtraParams>--hostname certwarden --dns 9.9.9.9 --dns 1.1.1.1 --log-opt max-size=10m --log-opt max-file=3</ExtraParams>
+  <PostArgs/>
+  <Requires>Eigenes Docker-Netz in Unraid (z. B. br0) mit freier fester IP. Für HTTP-01: HAProxy (haproxy-unraid) leitet Port 80 /.well-known/acme-challenge/ an Port 4060.</Requires>
+  <License>MIT</License>
+  <Config Name="Daten" Target="/app/data" Default="/mnt/user/appdata/certwarden" Mode="rw" Description="Datenbank, Schlüssel, Zertifikate. Unraid ohne Cache: Plattenpfad wie /mnt/disk1/appdata/certwarden verwenden (SQLite verträgt /mnt/user schlecht)." Type="Path" Display="always" Required="true" Mask="false">/mnt/disk1/appdata/certwarden/data</Config>
+  <Config Name="Zertifikat-Freigabe" Target="/zertifikate" Default="/mnt/user/zertifikate" Mode="rw" Description="Hierhin legt cw-ablegen.sh je Zertifikat einen Ordner &lt;name&gt;/ mit cert.pem, privkey.pem, combined.pem und info.txt. Andere Container binden den Ordner nur lesend (ro) ein." Type="Path" Display="always" Required="false" Mask="false">/mnt/user/zertifikate</Config>
+  <Config Name="Besitzer UID" Target="PUID" Default="99" Mode="" Description="Besitzer der abgelegten Dateien (Unraid: 99 = nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="Besitzer GID" Target="PGID" Default="100" Mode="" Description="Gruppe der abgelegten Dateien (Unraid: 100 = users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="Rechte Schlüsseldateien" Target="ABLAGE_SCHLUESSEL_MODUS" Default="640" Mode="" Description="Dateirechte für privkey.pem und combined.pem. 640 = nur Besitzer und Gruppe users." Type="Variable" Display="advanced" Required="false" Mask="false">640</Config>
+  <Config Name="STRATO: Wartezeit DNS" Target="STRATO_WAIT_MAX" Default="900" Mode="" Description="Sekunden, die das STRATO-Skript auf den sichtbaren TXT-Eintrag wartet." Type="Variable" Display="advanced" Required="false" Mask="false">900</Config>
+  <Config Name="Zeitzone" Target="TZ" Default="Europe/Berlin" Mode="" Description="Zeitzone für Logs und Zeitpläne." Type="Variable" Display="advanced" Required="false" Mask="false">Europe/Berlin</Config>
+</Container>
