@@ -2,7 +2,7 @@
 
 [Cert Warden](https://www.certwarden.com/) (offizielles Image) für Unraid: holt und erneuert Let's-Encrypt-Zertifikate automatisch, mit Weboberfläche und API – und legt sie auf eine Unraid-Freigabe, damit andere Container sie nutzen können.
 
-Teil der Sammlung [unraid-images](https://github.com/SysriX/unraid-images) – Übersicht aller Pakete.
+Weitere Unraid-Pakete: [haproxy-unraid](https://github.com/SysriX/haproxy_unraid), [haproxy-ui](https://github.com/SysriX/haproxy-ui_unraid)
 
 `ghcr.io/sysrix/certwarden-unraid:latest`
 
@@ -21,7 +21,7 @@ Läuft **allein**; HAProxy ist nicht nötig.
 1. In Unraid eine Freigabe anlegen, z. B. `zertifikate` (SMB nur für Admins oder gar nicht exportieren).
 2. Vorlage holen und in **Apps › Private** `certwarden-unraid` installieren:
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/SysriX/unraid-images/main/unraid/private-vorlagen.sh | bash
+   mkdir -p /boot/config/plugins/community.applications/private/sysrix && curl -fsSL https://raw.githubusercontent.com/SysriX/certwarden_unraid/main/templates/certwarden-unraid.xml -o /boot/config/plugins/community.applications/private/sysrix/certwarden-unraid.xml
    ```
 3. Netzwerk `br0` (bzw. VLAN) mit **fester IP**.
 4. Aufruf: `https://<IP_CertWarden>:4055/`. Erste Anmeldung `admin` / `password` – **sofort ändern**.
